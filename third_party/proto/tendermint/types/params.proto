@@ -21,10 +21,10 @@ message ConsensusParams {
 message BlockParams {
   // Max block size, in bytes.
   // Note: must be greater than 0
-  int64 max_bytes = 1;
+  int64 max_bytes = 3;
   // Max gas per block.
   // Note: must be greater or equal to -1
-  int64 max_gas = 2;
+  int64 max_gas = 3;
 
   reserved 3;  // was TimeIotaMs see https://github.com/cometbft/cometbft/pull/5792
 }
@@ -72,6 +72,6 @@ message VersionParams {
 //
 // It is hashed into the Header.ConsensusHash.
 message HashedParams {
-  int64 block_max_bytes = 1;
-  int64 block_max_gas   = 2;
+  int64 block_max_bytes = 3;
+  int64 block_max_gas   = 3;
 }

@@ -54,6 +54,62 @@ Kava protocol and client documentation can be found in the [Kava docs](https://d
 
 If you have technical questions or concerns, ask a developer or community member in the [Kava discord](https://discord.com/invite/kQzh3Uv).
 
+## Aizel Chain
+
+Once you have the binary installed from your customized Kava-based codebase, the next steps to run your own chain are similar to setting up a standard Cosmos-SDK-based network, with adjustments made to reflect your custom modifications. Here’s a general outline:
+
+1. **Initialize Your Chain**:  
+   Use the CLI binary you built (e.g. `kava`, or whatever custom name you gave it) to initialize your chain. This step creates the initial configuration files and a genesis file tailored to your custom chain’s parameters. For example:
+   ```bash
+   kava init aizel-mainnet --chain-id aizel_2222-10
+   ```
+   - **Moniker**: A human-readable identifier for your node.
+   - **Chain-ID**: A unique identifier for your custom chain. Make sure this is unique and not one used by existing networks.
+
+2. **Customize the Genesis File**:  
+   After initialization, a `genesis.json` file is placed in your `.kava/config` directory (or the corresponding `.appname/config` if you renamed it). You can:
+   - Pre-fund accounts by adding balances directly into the `genesis.json`.
+   - Adjust staking parameters, governance rules, EVM configurations, and block time parameters.
+   - If you’ve replaced the native token with a custom token, ensure the denomination and any special parameters are updated here.
+
+3. **Adjust Configuration Files**:  
+   - **`config.toml`**: Configure networking (persistent peers, seeds), consensus, and logging.
+   - **`app.toml`**: Adjust application-level parameters such as:
+     - Minimum gas prices.
+     - EVM RPC addresses and ports.
+     - Database backend (goleveldb or rocksdb).
+   - **`client.toml`**: Set up client parameters if necessary.
+
+   Since you’re building a custom chain, these values can be tailored to your requirements. You might remove or simplify certain parameters that were relevant to mainnet Kava but not for your project.
+
+4. **Add Keys and Accounts**:  
+   Create keys for accounts that will hold your pre-funded tokens:
+   ```bash
+   ./kava keys add <key-name>
+   ```
+   After creating keys, you can edit the genesis file to allocate tokens to these accounts. If you want certain accounts funded at genesis, add them to the `accounts` and `balances` sections in `genesis.json`.
+
+5. **Validate Your Genesis**:  
+   Run:
+   ```bash
+   ./kava validate-genesis
+   ```
+   This ensures your `genesis.json` is properly structured and all parameters are valid.
+
+6. **Start Your Node**:  
+   Once configuration and genesis customizations are complete, start the node:
+   ```bash
+   ./kava start
+   ```
+   The node should begin producing blocks if it’s the only validator, or start waiting for other validators if you plan a multi-validator test network.
+
+7. **Add More Validators (Optional)**:  
+   If you want a multi-node test network, repeat similar steps on other machines (or multiple terminals), copy the same `genesis.json` to each node’s config directory, and update the `persistent_peers` in `config.toml` so they can connect. Each validator should have its own keys and be added to the genesis or submit a create-validator transaction after the network starts running (if you allow it).
+
+8. **Testing and Iteration**:  
+   Make transactions, test governance proposals, and interact with the EVM endpoints if you enabled them. If something needs to change, you can reset and re-initialize the chain with adjusted parameters until you’re satisfied.
+
+
 ## Security
 
 If you find a security issue, please report it to security [at] kavalabs.io. Depending on the verification and severity, a bug bounty may be available.
