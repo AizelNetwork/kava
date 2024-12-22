@@ -109,6 +109,27 @@ Once you have the binary installed from your customized Kava-based codebase, the
 8. **Testing and Iteration**:  
    Make transactions, test governance proposals, and interact with the EVM endpoints if you enabled them. If something needs to change, you can reset and re-initialize the chain with adjusted parameters until you’re satisfied.
 
+### FAQ
+
+1. If you meet this issue when run "make install" : flag provided but not defined: -L/opt/homebrew/opt/openblas/lib,
+Just need to do :
+
+```bash
+unset LDFLAGS
+unset CFLAGS
+make install
+```
+2. update params.proto
+
+```bash
+make clean
+make proto-gen
+make install
+```
+
+
+
+
 
 ## Security
 
