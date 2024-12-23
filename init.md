@@ -225,7 +225,7 @@ cp $KAVAHOME/node1/config/genesis.json $KAVAHOME/node2/config/
 cp $KAVAHOME/node1/config/genesis.json $KAVAHOME/node3/config/
 ```
 
-### 3.4.4. Start nodes :
+### 2.4.4. Start nodes :
 ```bash
 nohup kava start --home=$KAVAHOME/node1 > $KAVAHOME/node1/node1.log 2>&1 &
 nohup kava start --home=$KAVAHOME/node2 > $KAVAHOME/node2/node2.log 2>&1 &
